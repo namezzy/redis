@@ -42,4 +42,14 @@ public class RedisServiceApplicationTests {
         }
     }
 
+    @Test
+    public void removeKey() {
+        redisService.remove("levi");
+    }
+
+
+    @Test
+    public void removeKeys() {
+        redisService.remove("keys");
+    }
 }
