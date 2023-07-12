@@ -1,0 +1,17 @@
+spring:
+    redis:
+      database: 6
+      host: 121.4.39.137
+      port: 6380
+      password: levizhao
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1
+          max-idle: 8
+          min-idle: 0
+
+    application:
+      title: Redis Application
+      version: 2.7.13
+
