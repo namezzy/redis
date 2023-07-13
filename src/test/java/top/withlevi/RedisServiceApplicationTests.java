@@ -8,6 +8,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import top.withlevi.service.RedisService;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -50,6 +52,29 @@ public class RedisServiceApplicationTests {
 
     @Test
     public void removeKeys() {
-        redisService.remove("keys");
+        Map<String, Object> map = new HashMap<>();
+        redisService.set("key1", "value1");
+        redisService.set("key2", "value2");
+        redisService.set("key3", "value3");
+
+        redisService.remove("key1", "key2");
+        Assert.assertEquals(null, redisService.get("key1"));
+        Assert.assertEquals(null, redisService.get("key2"));
+
+        Assert.assertEquals("value3", redisService.get("key3"));
+
+    }
+
+
+    @Test
+    public void removeByPattern() throws InterruptedException {
+        String testPattern = "test:*";
+        redisService.set("test:foo", "bar");
+        redisService.set("test:bar", "baz");
+        Thread.sleep(2000);
+        redisService.removePattern(testPattern);
+
+        Assert.assertEquals(null, redisService.get("test:foo"));
+        Assert.assertEquals(null, redisService.get("test:bar"));
     }
 }
